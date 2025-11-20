@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "websiteStatus" AS ENUM ('up', 'Down', 'Unknown');
+CREATE TYPE "website_status" AS ENUM ('up', 'Down', 'Unknown');
 
 -- CreateTable
 CREATE TABLE "user" (
@@ -29,22 +29,22 @@ CREATE TABLE "region" (
 );
 
 -- CreateTable
-CREATE TABLE "websiteTick" (
+CREATE TABLE "website_tick" (
     "id" TEXT NOT NULL,
     "response_time_ms" INTEGER NOT NULL,
-    "status" "websiteStatus" NOT NULL,
+    "status" "website_status" NOT NULL,
     "region_id" TEXT NOT NULL,
     "website_id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "websiteTick_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "website_tick_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
 ALTER TABLE "website" ADD CONSTRAINT "website_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "websiteTick" ADD CONSTRAINT "websiteTick_region_id_fkey" FOREIGN KEY ("region_id") REFERENCES "region"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "website_tick" ADD CONSTRAINT "website_tick_region_id_fkey" FOREIGN KEY ("region_id") REFERENCES "region"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "websiteTick" ADD CONSTRAINT "websiteTick_website_id_fkey" FOREIGN KEY ("website_id") REFERENCES "website"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "website_tick" ADD CONSTRAINT "website_tick_website_id_fkey" FOREIGN KEY ("website_id") REFERENCES "website"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

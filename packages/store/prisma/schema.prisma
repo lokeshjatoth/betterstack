@@ -47,7 +47,7 @@ model website_tick{
 }
 
 enum website_status{
-  up
+  Up
   Down
   Unknown
 }

@@ -1,0 +1,17 @@
+{
+  "name": "@repo/redis",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "exports": {
+    "./client": "./index.ts"
+  },
+  "dependencies": {
+    "redis": "^5.10.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "worker",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@repo/redis": "*",
+    "@repo/store": "*",
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3"
+  }
+}
