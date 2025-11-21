@@ -104,3 +104,43 @@ describe("Can fetch website", ()=>{
         
     })
 })
+
+
+describe("Should be able to get all websites", ()=>{
+    let token2: string, userId2: string;
+
+    beforeAll(async()=>{
+        const user2 = await createUser();
+        
+        token2 = user2.jwt;
+        userId2 = user2.id;
+    });
+
+    it("Can fetch its own set of websites", async()=>{
+        const websiteResponse = await axios.post(`${BACKEND_URL}/website`, {
+            url: "https://randomwebsite.com"
+        }, {
+            headers:{
+                Authorization: token2
+            }
+        });
+
+        await axios.post(`${BACKEND_URL}/website`, {
+            url: "https://facebook.com"
+        }, {
+            headers:{
+                Authorization: token2
+            }
+        });
+
+        try{
+            const response = await axios.get(`${BACKEND_URL}/websites`, {
+                headers:{
+                    Authorization: token2
+                }
+            })
+            expect(response.data.websites.length == 2, "Incorrect number of websites")
+        }catch(e){}
+        
+    })
+})

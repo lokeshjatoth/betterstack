@@ -5,11 +5,14 @@ import v1Router from "./routes/v1"
 import { prismaClient } from "@repo/store/client";
 import { AuthInput } from "./types";
 import { authMiddleware } from "./middleware";
+import cors from "cors";
+
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use("/api/v1", v1Router);
 
 app.get("/", (req, res)=>{
@@ -48,7 +51,7 @@ app.get("/status/:websiteId", authMiddleware, async(req, res)=>{
                 orderBy: [{
                     createdAt: 'desc',
                 }],
-                take: 1
+                take: 10
             }
         }
     })
@@ -63,7 +66,8 @@ app.get("/status/:websiteId", authMiddleware, async(req, res)=>{
     res.json({
         url: website.url,
         id: website.id,
-        user_id: website.user_id
+        user_id: website.user_id,
+        ticks: website.ticks
     })
 })
 
@@ -90,6 +94,25 @@ app.post("/user/signup",async (req, res)=>{
 
     
     
+})
+
+app.get("/websites", authMiddleware, async(req, res)=>{
+    const websites = await prismaClient.website.findMany({
+        where:{
+            user_id : req.userId
+        }, include:{
+            ticks:{
+                orderBy: [{
+                    createdAt: 'desc',
+                }],
+                take: 1
+            }
+        }
+    })
+
+    res.json({
+        websites
+    })
 })
 
 app.post("/user/signin",async (req, res)=>{

@@ -42,7 +42,10 @@ export async function xReadGroup(consumerGroup: string, workerId: string){
         consumerGroup,
         workerId,
         { key: STREAM_NAME, id: '>' },
-        { COUNT: 5 }
+        { 
+            COUNT: 5,
+            BLOCK: 2000 // <--- FIX: Wait 2000ms for messages before returning
+        }
     );
 
     if (!raw) return [];
